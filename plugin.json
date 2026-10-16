@@ -1,0 +1,58 @@
+{
+    "id": "web-services",
+    "name": "Web services (WMS/WFS)",
+    "version": "0.1.0",
+    "description": "Import all raster web services.",
+    "author": "Ingeniir",
+    "homepage": "https://github.com/Ingeniir/web-services",
+    "license": "MIT",
+    "entry": "plugin.wasm",
+    "abi": 1,
+    "minRustgisVersion": "0.1.0",
+    "permissions": ["edit"],
+    "commands": [
+        {
+            "id": "layer-report",
+            "label": "Layer\nReport",
+            "help": "Shown on hover.",
+            "icon": "stats",
+            "params": "{}"
+        }
+    ],
+    "tab": {
+        "label": "Explorer",
+        "groups": [
+            {
+                "label": "Inspecter",
+                "items": ["layer-report"]
+            }
+        ]
+    },
+    "tools": [
+        {
+            "id": "bounding-boxes",
+            "name": "Bounding Boxes",
+            "summary": "One line.",
+            "toolbox": "Hello",
+            "params": [
+                {
+                    "name": "input",
+                    "label": "Input features",
+                    "kind": "vectorLayer",
+                    "required": true
+                },
+                {
+                    "name": "whole",
+                    "label": "One box the whole layer",
+                    "kind": "bool",
+                    "default": false
+                }
+            ]
+        }
+    ],
+    "i18n": {
+        "fr": {
+            "Layer\nReport": "Report-\ncouche"
+        }
+    }
+}
