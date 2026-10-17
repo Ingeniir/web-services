@@ -1,58 +1,92 @@
 {
-    "id": "web-services",
-    "name": "Web services (WMS/WFS)",
-    "version": "0.1.0",
-    "description": "Import all raster web services.",
-    "author": "Ingeniir",
-    "homepage": "https://github.com/Ingeniir/web-services",
-    "license": "MIT",
-    "entry": "plugin.wasm",
-    "abi": 1,
-    "minRustgisVersion": "0.1.0",
-    "permissions": ["edit"],
-    "commands": [
-        {
-            "id": "layer-report",
-            "label": "Layer\nReport",
-            "help": "Shown on hover.",
-            "icon": "stats",
-            "params": "{}"
-        }
-    ],
-    "tab": {
-        "label": "Explorer",
-        "groups": [
-            {
-                "label": "Inspecter",
-                "items": ["layer-report"]
-            }
-        ]
+  "id": "web-services",
+  "name": "Web Services",
+  "version": "0.1.0",
+  "description": "Ajoute à la carte des services web OGC : fonds WMTS et overlays WMS de l'IGN (Géoplateforme), et couches vectorielles WFS téléchargées sur l'emprise de la vue.",
+  "author": "Ingeniir",
+  "homepage": "https://github.com/ingeniir/rustgis-web-services",
+  "license": "MIT",
+  "entry": "plugin.wasm",
+  "abi": 1,
+  "minRustgisVersion": "0.2.0",
+  "permissions": ["edit", "network"],
+  "commands": [
+    {
+      "id": "ign-ortho",
+      "label": "Ortho-\nphotos",
+      "help": "Orthophotographies IGN (WMTS). Remplace le fond web actuel, sauf avec add.",
+      "icon": "basemap",
+      "params": "{\"add\"?: bool}"
     },
-    "tools": [
-        {
-            "id": "bounding-boxes",
-            "name": "Bounding Boxes",
-            "summary": "One line.",
-            "toolbox": "Hello",
-            "params": [
-                {
-                    "name": "input",
-                    "label": "Input features",
-                    "kind": "vectorLayer",
-                    "required": true
-                },
-                {
-                    "name": "whole",
-                    "label": "One box the whole layer",
-                    "kind": "bool",
-                    "default": false
-                }
-            ]
-        }
-    ],
-    "i18n": {
-        "fr": {
-            "Layer\nReport": "Report-\ncouche"
-        }
+    {
+      "id": "ign-plan",
+      "label": "Plan\nIGN",
+      "help": "Plan IGN v2 (WMTS). Remplace le fond web actuel, sauf avec add.",
+      "icon": "web_map",
+      "params": "{\"add\"?: bool}"
+    },
+    {
+      "id": "ign-cadastre-wms",
+      "label": "Cadastre",
+      "help": "Parcelles cadastrales IGN (WMS), en overlay. Cliquer à nouveau pour le retirer.",
+      "icon": "raster_layer",
+      "params": "{}"
+    },
+    {
+      "id": "ign-communes-wfs",
+      "label": "Communes",
+      "help": "Limites communales ADMIN EXPRESS (WFS) sur l'emprise de la vue, 1000 objets maximum.",
+      "icon": "line_layer",
+      "params": "{}"
+    },
+    {
+      "id": "ign-batiments-wfs",
+      "label": "Bâtiments",
+      "help": "Bâtiments BD TOPO (WFS) sur l'emprise de la vue, 5000 objets maximum. Zoomer avant de lancer.",
+      "icon": "point_layer",
+      "params": "{}"
+    },
+    {
+      "id": "clear",
+      "label": "Tout\nretirer",
+      "help": "Retire de la carte les couches tuilées ajoutées par ce plugin.",
+      "icon": "delete",
+      "params": "{}"
     }
+  ],
+  "tab": {
+    "label": "Services web",
+    "groups": [
+      {
+        "label": "Fonds IGN",
+        "items": [
+          {
+            "menu": "Fonds",
+            "icon": "basemap",
+            "help": "Fonds de carte WMTS de l'IGN",
+            "items": ["ign-ortho", "ign-plan"]
+          }
+        ]
+      },
+      {
+        "label": "Overlays",
+        "items": ["ign-cadastre-wms"]
+      },
+      {
+        "label": "WFS",
+        "items": [
+          {
+            "menu": "Vecteurs",
+            "icon": "line_layer",
+            "help": "Couches WFS téléchargées sur l'emprise de la vue",
+            "items": ["ign-communes-wfs", "ign-batiments-wfs"]
+          }
+        ]
+      },
+      {
+        "label": "Gérer",
+        "items": ["clear"]
+      }
+    ]
+  }
 }
